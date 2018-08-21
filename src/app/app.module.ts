@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'; // for routing
+import { FormsModule } from '@angular/forms'; // for input handling
 
 import { AppComponent } from './app.component';
 
@@ -22,7 +23,8 @@ import { HeaderComponent } from './pages/header/header.component';
   ],
   imports: [ //duuuude
     BrowserModule,
-    RouterModule.forRoot([
+    FormsModule,
+    RouterModule.forRoot([ // order matters, because it's like express
       { path: '', component: HomeComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'about', component: AboutComponent },
