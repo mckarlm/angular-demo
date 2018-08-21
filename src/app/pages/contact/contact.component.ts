@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BackendService } from '../../services/backend.service';
+
 
 @Component({
   // selector: 'app-contact' 
@@ -22,11 +24,12 @@ export class ContactComponent {
   nameErrors: string[] = []
   emailErrors: string[] = []
 
-  constructor() { }
+  // injection of BackendService
+  constructor(private backend: BackendService) { }
 
   validateName() {
     this.nameErrors.length = 0;
-    console.log('name fire')
+    // console.log('name fire')
     // validate existence
     if (!this.formData.name) {
       this.nameErrors.push('No Name Given');
@@ -42,7 +45,7 @@ export class ContactComponent {
 
   validateEmail() {
     this.emailErrors.length = 0;
-    console.log('email fire')
+    // console.log('email fire')
     if (!this.formData.email) {
       this.emailErrors.push('No Email Given');
       this.emailValid = false;
@@ -68,12 +71,15 @@ export class ContactComponent {
   }
 
   submitDisabled() {
-    console.log('fire disabled')
+    // console.log('fire disabled')
     return !(this.nameValid && this.emailValid);
   }
 
   submitForm(event, someValue) {
-    console.log('clicked', event, someValue)
-    console.log(this.formData); // logs the object itself
+    //contact() comes from backend.service.ts
+    this.backend.contact(this.formData)
+      .then((response) => {
+        console.log('response', response);
+      });
   }
 }

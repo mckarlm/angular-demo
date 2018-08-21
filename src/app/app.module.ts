@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'; // for routing
 import { FormsModule } from '@angular/forms'; // for input handling
+import { HttpClientModule } from '@angular/common/http'; // ng's version of axios, and it's built in.
 
 import { AppComponent } from './app.component';
 
@@ -12,6 +13,9 @@ import { ContactComponent } from './pages/contact/contact.component';
 
 //shared components
 import { HeaderComponent } from './pages/header/header.component';
+
+//services
+import { BackendService } from './services/backend.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,7 @@ import { HeaderComponent } from './pages/header/header.component';
   imports: [ //duuuude
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot([ // order matters, because it's like express
       { path: '', component: HomeComponent },
       { path: 'contact', component: ContactComponent },
@@ -31,7 +36,7 @@ import { HeaderComponent } from './pages/header/header.component';
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ])
   ],
-  providers: [],
+  providers: [BackendService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
