@@ -1,20 +1,31 @@
+<h1 class="headerTitle">Contact Page</h1>
+
 <form>
-  <label for="name">Name:</label>
-  <br/>
-  <input type="text" name="name" [(ngModel)]="formData.name">
-  <br/>
+  <div class="input-group">
+    <label for="name">Name:</label>
+    <input type="text" name="name" [(ngModel)]="formData.name" (keyup)="validateName()">
+    <div class="errors">
+      {{ getNameErrors() }}
+    </div>
+  </div>
+  <div class="input-group">
+    <label for="email">Email:</label>
+    <input type="text" name="email" [(ngModel)]="formData.email" (keyup)="validateEmail()">
+    <div class="errors">
+      {{ getEmailErrors() }}
+    </div>
+  </div>
+
+  <button class="btn" (click)="submitForm($event, formData.name)" [disabled]="submitDisabled()">
+    Submit
+  </button>
 
   <br/>
 
-  <label for="email">Email:</label>
-  <br/>
-  <input type="text" name="email" [(ngModel)]="formData.email">
-  <br/>
-
-  <br/>
-
-  <button (click)="submitForm($event, formData.name)">Submit</button>
-
-  {{ formData.name }}
-  {{ formData.email}}
+  <div>
+    {{ formData.name }} {{ formData.email}}
+  </div>
 </form>
+
+<!-- () binds to event, while [] binds to attributes. [(ngModel)] is two way binding -->
+<!-- (keyup) fires the function value every time a key is pressed -->
