@@ -10,12 +10,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component'
 import { ContactComponent } from './pages/contact/contact.component';
+import { LoginComponent } from './pages/login/login.component';
 
 //shared components
 import { HeaderComponent } from './pages/header/header.component';
 
 //services
 import { BackendService } from './services/backend.service';
+import { SessionService } from './services/session.service'
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { BackendService } from './services/backend.service';
     HomeComponent,
     AboutComponent,
     ContactComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent
   ],
   imports: [ //duuuude
     BrowserModule,
@@ -31,12 +35,17 @@ import { BackendService } from './services/backend.service';
     HttpClientModule,
     RouterModule.forRoot([ // order matters, because it's like express
       { path: '', component: HomeComponent },
+      { path: 'login', component: LoginComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'about', component: AboutComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ])
   ],
-  providers: [BackendService],
+  providers: [
+    BackendService,
+    SessionService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

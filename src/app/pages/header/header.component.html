@@ -1,4 +1,7 @@
 <ul>
+  <li *ngIf="isLoggedIn()">
+    Welcome, {{ user.username }}
+  </li>
   <li>
     <a routerLink="/">Home</a>
   </li>
@@ -7,5 +10,15 @@
   </li>
   <li>
     <a routerLink="/contact">Contact</a>
+  </li>
+  <li *ngIf="!isLoggedIn()">
+    <a routerLink="/login">Login</a>
+  </li>
+  <!-- <li>
+    <a routerLink="/register">Register</a>
+  </li> -->
+  <!-- <li *ngIf="isLoggedIn()"> -->
+  <li *ngIf="user.loggedIn">
+    <button (click)="logout()">Logout</button>
   </li>
 </ul>
