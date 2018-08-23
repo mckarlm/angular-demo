@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user: object;
 
   private _isLoggedIn: boolean;
+  private _isLoggedInAsObservable;
 
   constructor(
     private auth: AuthService,
@@ -20,7 +21,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.session.isLoggedInAsAnObservable()
+    // short version
+    // using this means you don't need OnDestroy
+    this._isLoggedInAsObservable = this.session.isLoggedInAsAnObservable();
+
+    // long version
+    this._isLoggedInAsObservable
       .subscribe(
         (loggedIn: boolean) => {
           this._isLoggedIn = loggedIn;
@@ -28,11 +34,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         err => {
           console.log(err)
         }
-      )
+      );
   }
 
   ngOnDestroy() {
-  
+    // long
+    this._isLoggedInAsObservable.unscubscribe();
   }
 
   isLoggedIn() {

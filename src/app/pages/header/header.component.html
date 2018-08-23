@@ -1,5 +1,5 @@
 <ul>
-  <li *ngIf="isLoggedIn()">
+  <li *ngIf="_isLoggedInAsObservable | async">
     Welcome, {{ user.username }}
   </li>
   <li>
@@ -11,15 +11,19 @@
   <li>
     <a routerLink="/contact">Contact</a>
   </li>
-  <li *ngIf="!isLoggedIn()">
-    <a routerLink="/login">Login</a>
-  </li>
   <!-- <li>
     <a routerLink="/register">Register</a>
   </li> -->
+  <li *ngIf="!(_isLoggedInAsObservable | async)">
+    <a routerLink="/login">Login</a>
+  </li>
   <!-- <li *ngIf="user.loggedIn"> -->
-  <li *ngIf="isLoggedIn()">
+  <li *ngIf="_isLoggedInAsObservable | async">
     <button (click)="logout()">Logout</button>
+  </li>
+
+  <li>
+    {{_isLoggedInAsObservable | async}}
   </li>
 </ul>
 
