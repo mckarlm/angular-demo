@@ -8,9 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class BackendService {
   url: string = 'http://localhost:4200/api/';
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {  }
 
   // data becomes "this.backend"
   contact(data) {
