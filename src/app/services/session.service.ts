@@ -1,6 +1,7 @@
 // Services just serve data, they serve as Angular's equivalent to store
 
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +9,13 @@ import { Injectable } from '@angular/core';
 
 export class SessionService {
   user: {
-    loggedIn: boolean,
     username: string
   } = {
-      loggedIn: false,
       username: ''
     };
+
+    // subject to hold isLoggedIn value (default being false)
+    private _isLoggedInSubject = new BehaviorSubject<boolean>(false);
 
   constructor() {
     // Check if user is in localStorage
@@ -22,6 +24,10 @@ export class SessionService {
     try {
       if (userString) { this.user = JSON.parse(userString); }
       else { console.log('user not found'); }
+
+      // update _isLoggedInSubject on construction
+      // first event being emitted
+      this._isLoggedInSubject.next(!!userString);
     }
     catch (err) {
       console.log('could not parse user');
@@ -33,24 +39,28 @@ export class SessionService {
   }
 
   // parallel to logging in the user to the application
-  setSession(username) {
+  setSession(username = '') {
     // saves to memory
     this.user.username = username;
-    this.user.loggedIn = true;
 
     // saves to localStorage
     let userString = JSON.stringify(this.user);
     window.localStorage.setItem('user', userString);
+
+    // update subject
+    this._isLoggedInSubject.next(true)
   }
 
   // parallel to logging out the user from the application
   clearSession() {
-    this.user.loggedIn = false;
     this.user.username = '';
     window.localStorage.removeItem('user');
+
+    // update subject
+    this._isLoggedInSubject.next(false)
   }
 
-  isLoggedIn() {
-    return this.user.loggedIn;
+  isLoggedInAsAnObservable() {
+    return this._isLoggedInSubject.asObservable();
   }
 }

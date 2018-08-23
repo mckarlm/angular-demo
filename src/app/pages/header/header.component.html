@@ -17,8 +17,10 @@
   <!-- <li>
     <a routerLink="/register">Register</a>
   </li> -->
-  <!-- <li *ngIf="isLoggedIn()"> -->
-  <li *ngIf="user.loggedIn">
+  <!-- <li *ngIf="user.loggedIn"> -->
+  <li *ngIf="isLoggedIn()">
     <button (click)="logout()">Logout</button>
   </li>
 </ul>
+
+<!-- user.loggedIn is not usable with object observables -->
